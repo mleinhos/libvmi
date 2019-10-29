@@ -2089,6 +2089,19 @@ status_t vmi_get_kernel_struct_offset(
     addr_t *addr);
 
 /**
+ * Get the memory size associated with the given structure
+ * @param[in] vmi LibVMI instance
+ * @param[in] struct_name String name for desired symbol
+ * @param[out] size of the struct
+ *
+ * @return VMI_SUCCESS or VMI_FAILURE
+ */
+status_t vmi_get_kernel_struct_size(
+    vmi_instance_t vmi,
+    const char* struct_name,
+    size_t *size);
+
+/**
  * Gets the current value for a VCPU xsave info.When LibVMI is accessing a raw
  * memory file or KVM, this function will fail.
  *

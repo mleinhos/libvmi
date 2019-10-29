@@ -98,3 +98,37 @@ rekall_profile_symbol_to_rva(
 exit:
     return ret;
 }
+
+status_t
+rekall_profile_symbol_to_size(
+    json_object *root,
+    const char *symbol,
+    size_t * size)
+{
+    status_t ret = VMI_FAILURE;
+    if (!root || !symbol) {
+        return ret;
+    }
+
+    json_object *structs = NULL, *jstruct = NULL, *jstruct2 = NULL, *jmember = NULL, *jvalue = NULL;
+    if (!json_object_object_get_ex(root, "$STRUCTS", &structs)) {
+        dbprint(VMI_DEBUG_MISC, "Rekall profile: no $STRUCTS section found\n");
+        goto exit;
+    }
+    if (!json_object_object_get_ex(structs, symbol, &jstruct)) {
+        dbprint(VMI_DEBUG_MISC, "Rekall profile: no %s found\n", symbol);
+        goto exit;
+    }
+
+    jstruct2 = json_object_array_get_idx(jstruct, 0);
+    if (!jstruct2) {
+        dbprint(VMI_DEBUG_MISC, "Rekall profile: struct %s has no first element\n", symbol);
+        goto exit;
+    }
+
+    *size = json_object_get_int64(jvalue);
+    ret = VMI_SUCCESS;
+
+exit:
+    return ret;
+}

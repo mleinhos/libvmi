@@ -599,6 +599,7 @@ status_t linux_init(vmi_instance_t vmi, GHashTable *config)
     bzero(os_interface, sizeof(struct os_interface));
     os_interface->os_get_offset = linux_get_offset;
     os_interface->os_get_kernel_struct_offset = linux_get_kernel_struct_offset;
+    os_interface->os_get_kernel_struct_size = linux_get_kernel_struct_size;
     os_interface->os_pid_to_pgd = linux_pid_to_pgd;
     os_interface->os_pgd_to_pid = linux_pgd_to_pid;
     os_interface->os_ksym2v = linux_symbol_to_address;
@@ -705,6 +706,11 @@ _done:
 status_t linux_get_kernel_struct_offset(vmi_instance_t vmi, const char* symbol, const char* member, addr_t *addr)
 {
     return rekall_profile_symbol_to_rva(rekall_profile(vmi), symbol, member, addr);
+}
+
+status_t linux_get_kernel_struct_size(vmi_instance_t vmi, const char* symbol, size_t *size)
+{
+    return rekall_profile_symbol_to_size(rekall_profile(vmi), symbol, size);
 }
 
 status_t linux_get_offset(vmi_instance_t vmi, const char* offset_name, addr_t *offset)

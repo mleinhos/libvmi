@@ -498,6 +498,11 @@ status_t windows_get_kernel_struct_offset(vmi_instance_t vmi, const char* symbol
     return rekall_profile_symbol_to_rva(rekall_profile(vmi), symbol, member, addr);
 }
 
+status_t windows_get_kernel_struct_size(vmi_instance_t vmi, const char* symbol, size_t * size)
+{
+    return rekall_profile_symbol_to_size(rekall_profile(vmi), symbol, size);
+}
+
 status_t windows_get_offset(vmi_instance_t vmi, const char* offset_name, addr_t *offset)
 {
     const size_t max_length = 100;
@@ -1087,6 +1092,7 @@ windows_init(vmi_instance_t vmi, GHashTable *config)
 
     bzero(os_interface, sizeof(struct os_interface));
     os_interface->os_get_kernel_struct_offset = windows_get_kernel_struct_offset;
+    os_interface->os_get_kernel_struct_size = windows_get_kernel_struct_size;
     os_interface->os_get_offset = windows_get_offset;
     os_interface->os_pid_to_pgd = windows_pid_to_pgd;
     os_interface->os_pgd_to_pid = windows_pgd_to_pid;

@@ -174,6 +174,21 @@ vmi_get_kernel_struct_offset(
     return vmi->os_interface->os_get_kernel_struct_offset(vmi, symbol, member, addr);
 }
 
+status_t
+vmi_get_kernel_struct_size(
+    vmi_instance_t vmi,
+    const char* symbol,
+    size_t * size)
+{
+
+#ifdef ENABLE_SAFETY_CHECKS
+    if (!vmi || !size)
+        return 0;
+#endif
+
+    return vmi->os_interface->os_get_kernel_struct_size(vmi, symbol, size);
+}
+
 status_t vmi_get_xsave_info(
     vmi_instance_t vmi,
     unsigned long vcpu,

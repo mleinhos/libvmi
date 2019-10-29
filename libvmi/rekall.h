@@ -32,9 +32,16 @@ rekall_profile_symbol_to_rva(
     const char *subsymbol,
     addr_t *rva);
 
+status_t
+rekall_profile_symbol_to_size(
+    json_object *rekall_profile_json,
+    const char *symbol,
+    size_t * size);
+
 #else
 
 #define rekall_profile_symbol_to_rva(...) VMI_FAILURE
+#define rekall_profile_symbol_to_size(...) VMI_FAILURE
 
 #endif
 
