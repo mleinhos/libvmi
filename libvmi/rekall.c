@@ -100,7 +100,7 @@ exit:
 }
 
 status_t
-rekall_profile_symbol_to_size(
+rekall_profile_struct_size(
     json_object *root,
     const char *symbol,
     size_t * size)
@@ -110,7 +110,7 @@ rekall_profile_symbol_to_size(
         return ret;
     }
 
-    json_object *structs = NULL, *jstruct = NULL, *jstruct2 = NULL, *jmember = NULL, *jvalue = NULL;
+    json_object *structs = NULL, *jstruct = NULL, *jvalue = NULL;
     if (!json_object_object_get_ex(root, "$STRUCTS", &structs)) {
         dbprint(VMI_DEBUG_MISC, "Rekall profile: no $STRUCTS section found\n");
         goto exit;
@@ -120,8 +120,8 @@ rekall_profile_symbol_to_size(
         goto exit;
     }
 
-    jstruct2 = json_object_array_get_idx(jstruct, 0);
-    if (!jstruct2) {
+    jvalue = json_object_array_get_idx(jstruct, 0);
+    if (!jvalue) {
         dbprint(VMI_DEBUG_MISC, "Rekall profile: struct %s has no first element\n", symbol);
         goto exit;
     }

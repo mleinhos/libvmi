@@ -500,7 +500,7 @@ status_t windows_get_kernel_struct_offset(vmi_instance_t vmi, const char* symbol
 
 status_t windows_get_kernel_struct_size(vmi_instance_t vmi, const char* symbol, size_t * size)
 {
-    return rekall_profile_symbol_to_size(rekall_profile(vmi), symbol, size);
+    return rekall_profile_struct_size(rekall_profile(vmi), symbol, size);
 }
 
 status_t windows_get_offset(vmi_instance_t vmi, const char* offset_name, addr_t *offset)
